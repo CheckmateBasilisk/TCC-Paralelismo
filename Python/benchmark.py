@@ -23,44 +23,29 @@ def count_clocks(*args, f=None, **kwargs):
 
 
 # TODO: adicionar intervalo de confiança e desvio padrão
-# TODO: devo perturbar o cache entre execuções??? Faz sentido fazer isso??? Pq as vantagens do cache não podem ser parte da vantagem da linguagem 
+# TODO: devo perturbar o cache entre execuções??? Faz sentido fazer isso??? Pq as vantagens do cache não podem ser parte da vantagem da linguagem
 # given function f (their positional arguments args, their keyword arguments kwargs)
 # and number of runs n_runs
 # returns the average nr of clocks needed to compute f
 # WILL NOT TREAT MISUSE
-def avg_count_clocks(*args, f=None, n_runs=1, **kwargs):
+def avg_count_clocks(*args, f=None, n_runs=1, progress_bar = True, **kwargs):
     avg_clock = 0
-    # n jobs. doing each one after the last
-    for i in tqdm(range(n_runs)): #tqdm is just a progress bar
-        #print(f"running... {i+1}/{n}")
-        avg_clock += count_clocks(f=f, *args,**kwargs) # if f has no positional args, this will work :)
-    return avg_clock/n_runs
+    if(progress_bar == True):
+        # n jobs. doing each one after the last
+        for i in tqdm(range(n_runs)): #tqdm is just a progress bar
+            #print(f"running... {i+1}/{n}")
+            avg_clock += count_clocks(f=f, *args,**kwargs) # if f has no positional args, this will work :)
+        return avg_clock/n_runs
+    elif(progress_bar == False): #duplicated code, nothing new down here
+        # n jobs. doing each one after the last
+        for i in range(n_runs): #tqdm is just a progress bar
+            #print(f"running... {i+1}/{n}")
+            avg_clock += count_clocks(f=f, *args,**kwargs) # if f has no positional args, this will work :)
+        return avg_clock/n_runs
 
 
-#TODO: tem algo errado na minha lógica. O programa com threads tá levando mto mais q o normal...
-# threading tem que acontecer dentro da função de computação de pi, não na fç que faz a média!!!!!
-# daqui pra baixo não tem nada de errado com o código em si, mas não faz sentido se preocupar em multiprocessar o cálculo das médias.
 
-# given thread-safe function f (their positional arguments args, their keyword arguments kwargs)
-# the number of runs n_runs
-# and the number of threads n_threads
-# returns the average nr of clocks needed to compute f
-# using thread pooling to run n times on n_threads (ONLY AVAILABLE IN V3.2+)
-# WILL NOT TREAT MISUSE
-def avg_count_clocks_thread_pool(*args, f=None, n_runs=1, n_threads = 1, **kwargs):
-    avg_clock = 0
-    # starts threads, stores them in the thread array
-    # submits n jobs for the n_threads workers to compute
-    with concurrent.futures.ThreadPoolExecutor(max_workers = n_threads) as executor: # TODO: max_workers really defines the max amount of threads?
-        # each execution of f is a job. Dividing jobs between threads:
-        jobs = [ executor.submit(count_clocks,f=f, *args, **kwargs) for i in range(n) ]
-        # joining (sync) threads
-        for i,j in enumerate(tqdm(jobs)): #tqdm is just a progress bar
-            #print(f"joining job (with {n_threads} workers) {i}/{n}")
 
-            avg_clock += j.result()/n # if f has no positional args, this will work :)
-
-    return avg_clock
 
 
 """
@@ -68,7 +53,6 @@ links usados
 Python Threading Tutorial: Run Code Concurrently Using the Threading Module
     https://www.youtube.com/watch?v=IEEhzQoKtQU
 """
-
 
 """[1]
 # example function with two named parameters
