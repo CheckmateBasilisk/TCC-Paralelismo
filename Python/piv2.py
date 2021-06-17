@@ -2,12 +2,6 @@ from math import floor, ceil
 # import threading
 import concurrent.futures
 
-# when this is called by the manager, it should put into the stdout the elapsed time for computing pi
-# it will recieve one parameter: the number of threads
-# when nrThreads == 0, the non-threaded version should run
-def main():
-
-
 # computing pi using Leibnitz's Formula
 # given the number of max_iterations
 # computes pi using 'max_iterations' terms of a series (Leibnitz's Formula)
@@ -90,7 +84,3 @@ def compute_pi_wallis(start = 0, max_iterations = 10_000_000):
     result *= 2
 
     return(result)
-
-
-if __name__ == "__main__":
-    main()
