@@ -6,6 +6,24 @@ import concurrent.futures
 # it will recieve one parameter: the number of threads
 # when nrThreads == 0, the non-threaded version should run
 def main():
+    import time
+    import sys
+
+    nthreads = int(sys.argv[1]) # paramaeter passed to script
+    maxworkers = nthreads
+    n_iterations = 1_000_000 
+
+    elapsed_time = time.time() # get current time
+    if(nthreads == 0):
+        compute_pi(max_iterations = n_iterations)
+    elif(sys.argv[2] == "thread"):
+        compute_pi_thread_pool(max_iterations = n_iterations, n_threads = nthreads, max_workers = maxworkers)
+    elif(sys.argv[2] == "process"):
+        compute_pi_process_pool(max_iterations = n_iterations, n_threads = nthreads, max_workers = maxworkers)
+    elapsed_time = time.time() - elapsed_time # get elapsed time
+
+    print(elapsed_time)
+    return elapsed_time
 
 
 # computing pi using Leibnitz's Formula

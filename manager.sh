@@ -16,35 +16,52 @@ APPLICATION=(pi matrix)
 LANGUAGE=(python rust haskell go kotlin)
 THREADS=(0 1 2 3 4) # 0 threads means a non-paralelized application
 
-if [ $1 = "clear" ] # clears output files
+N_RUNS=30
+
+if [ $# -gt 0 ] # clears output files
 then
-    rm $OUTPUT_DIR/*
+    if [ $1 = "clear" ] # looks ugly. Will work for now
+    then
+        rm $OUTPUT_DIR/*
 
-    for T in ${THREADS[@]}
-    do
-        for A in ${APPLICATION[@]}
+        for T in ${THREADS[@]}
         do
-            touch "${OUTPUT_DIR}/python_${A}_${T}threads.out"
-            touch "${OUTPUT_DIR}/go_${A}_${T}threads.out"
-            touch "${OUTPUT_DIR}/rust_${A}_${T}threads.out"
-            touch "${OUTPUT_DIR}/haskell_${A}_${T}threads.out"
-            touch "${OUTPUT_DIR}/kotlin_${A}_${T}threads.out"
+            for A in ${APPLICATION[@]}
+            do
+                touch "${OUTPUT_DIR}/python_threadpool_${A}_${T}threads.out"
+                touch "${OUTPUT_DIR}/python_processpool_${A}_${T}threads.out"
+                touch "${OUTPUT_DIR}/go_${A}_${T}threads.out"
+                touch "${OUTPUT_DIR}/rust_${A}_${T}threads.out"
+                touch "${OUTPUT_DIR}/haskell_${A}_${T}threads.out"
+                touch "${OUTPUT_DIR}/kotlin_${A}_${T}threads.out"
+            done
         done
-    done
+    else
+        echo "usage: ./manager [clear]"
+    fi
 else
-    for T in ${THREADS[@]}
+    RUN=0
+    while [ $RUN -lt $N_RUNS ]
     do
-        for A in ${APPLICATION[@]}
+        RUN=`expr $RUN + 1`;
+        echo ""
+        #echo $RUN/$N_RUNS
+        for T in ${THREADS[@]}
         do
-            #echo "${L}_${A}-${T}threads.out"
-            python3 $PYTHON_DIR/${A}.py ${T} >> ${OUTPUT_DIR}/python_${A}_${T}threads.out
+            for A in ${APPLICATION[@]}
+            do
+                echo "Run $RUN/$N_RUNS - $A, $T threads"
+                #echo "${L}_${A}-${T}threads.out"
+                python3 $PYTHON_DIR/${A}.py ${T} process >> ${OUTPUT_DIR}/python_threadpool_${A}_${T}threads.out
+                python3 $PYTHON_DIR/${A}.py ${T} thread >> ${OUTPUT_DIR}/python_processpool_${A}_${T}threads.out
+                echo -e "\tpython DONE"
+                #echo "$GO_DIR/${A}.go ${T} >> ${OUTPUT_DIR}/go_${A}_${T}threads.out"
+                #echo "$RUST_DIR/${A}.rs ${T} >> ${OUTPUT_DIR}/rust_${A}_${T}threads.out"
+                #echo "$HASKELL_DIR/${A}.hs ${T} >> ${OUTPUT_DIR}/haskell_${A}_${T}threads.out"
+                #echo "$KOTLIN_DIR/${A}.ktl ${T} >> ${OUTPUT_DIR}/kotlin_${A}_${T}threads.out"
 
-            #echo "$GO_DIR/${A}.go ${T} >> ${OUTPUT_DIR}/go_${A}_${T}threads.out"
-            #echo "$RUST_DIR/${A}.rs ${T} >> ${OUTPUT_DIR}/rust_${A}_${T}threads.out"
-            #echo "$HASKELL_DIR/${A}.hs ${T} >> ${OUTPUT_DIR}/haskell_${A}_${T}threads.out"
-            #echo "$KOTLIN_DIR/${A}.ktl ${T} >> ${OUTPUT_DIR}/kotlin_${A}_${T}threads.out"
-            
 
+            done
         done
     done
 
