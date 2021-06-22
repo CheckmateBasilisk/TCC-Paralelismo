@@ -11,7 +11,7 @@ def main():
 
     nthreads = int(sys.argv[1]) # paramaeter passed to script
     maxworkers = nthreads
-    n_iterations = 1_000_000 
+    n_iterations = 10_000_000
 
     elapsed_time = time.time() # get current time
     if(nthreads == 0):
@@ -26,9 +26,9 @@ def main():
     return elapsed_time
 
 
-# computing pi using Leibnitz's Formula
+# computing pi using Leibniz's Formula
 # given the number of max_iterations
-# computes pi using 'max_iterations' terms of a series (Leibnitz's Formula)
+# computes pi using 'max_iterations' terms of a series (Leibniz's Formula)
 # defaults to 10 million max_iterations, wields 6 digit-precise pi
 # the series starts at a given term, defaults to 0. Anything other than 0 won't compute pi properly but is useful for splitting the workload
 def compute_pi(start = 0, max_iterations = 10_000_000):
@@ -98,7 +98,7 @@ def compute_pi_process_pool(max_iterations = 10_000_000, n_threads = 1, max_work
 
 
 # computing pi using Wallis Product
-# it seems to converge slower towards pi than the Leibnitz Formula
+# it seems to converge slower towards pi than the Leibniz Formula
 def compute_pi_wallis(start = 0, max_iterations = 10_000_000):
     result = 1
     # i starting in 0 to max_iterations-1
