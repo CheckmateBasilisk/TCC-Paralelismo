@@ -1,5 +1,5 @@
 #include<stdio.h>
-#include <time.h>
+#include<time.h>
 #include<math.h>
 
 
@@ -15,13 +15,11 @@ double pi(int maxIter){
 
 
 int main(){
-    int maxIter = 1000000000;
+    int maxIter = 10000000;
     clock_t start, end;
     double cpu_time_used;
 
-
     start = clock();
-    printf("hellothere");
     printf("%lf\n", pi(maxIter));
     end = clock();
 

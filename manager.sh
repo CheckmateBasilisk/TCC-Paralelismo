@@ -16,7 +16,7 @@ APPLICATION=(pi matrix)
 LANGUAGE=(python rust haskell go kotlin)
 THREADS=(0 1 2 3 4) # 0 threads means a non-paralelized application
 
-N_RUNS=30
+N_RUNS=5
 
 if [ $# -gt 0 ] # clears output files
 then
@@ -54,8 +54,10 @@ else
                 #echo "${L}_${A}-${T}threads.out"
                 python3 $PYTHON_DIR/${A}.py ${T} process >> ${OUTPUT_DIR}/python_threadpool_${A}_${T}threads.out
                 python3 $PYTHON_DIR/${A}.py ${T} thread >> ${OUTPUT_DIR}/python_processpool_${A}_${T}threads.out
-                echo -e "\tpython DONE"
-                #echo "$GO_DIR/${A}.go ${T} >> ${OUTPUT_DIR}/go_${A}_${T}threads.out"
+                echo -e "\tPython DONE"
+                # ./Go/pi/pi.exe nthreads
+                $GO_DIR/${A}/${A} ${T}  >> ${OUTPUT_DIR}/go_${A}_${T}threads.out
+                echo -e "\tGo DONE"
                 #echo "$RUST_DIR/${A}.rs ${T} >> ${OUTPUT_DIR}/rust_${A}_${T}threads.out"
                 #echo "$HASKELL_DIR/${A}.hs ${T} >> ${OUTPUT_DIR}/haskell_${A}_${T}threads.out"
                 #echo "$KOTLIN_DIR/${A}.ktl ${T} >> ${OUTPUT_DIR}/kotlin_${A}_${T}threads.out"

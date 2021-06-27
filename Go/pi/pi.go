@@ -17,14 +17,14 @@ func main() {
     start := time.Now()
 
     if nThreads == 0 {
-        fmt.Println(pi(maxIter))
+        pi(maxIter)
     } else {
         // runtime.GOMAXPROCS(nThreads) //limits the nr of actual OS threads
-        fmt.Println(piThread(maxIter, nThreads))
+        piThread(maxIter, nThreads)
     }
 
     elapsedTime := time.Since(start)
-    fmt.Println(elapsedTime)
+    fmt.Println(elapsedTime.Seconds())
 
     return
 }
@@ -39,34 +39,29 @@ func piThread(maxIter int, nThreads int) float64{
 
     //spawning threads
     for i := 0; i < nThreads; i++ {
-        // computes pi partially
-        // outputs the result in the channel
+        // computes pi partially in goroutines
+        // outputs the result in the channel ch
         go func(start int, end int, ch chan float64) {
             var i int = 0
             var r float64 = 0
             for i = start; i < end; i++ {
                 r += 4.0 * math.Pow(-1, float64(i)) * 1/(float64(i)*2+1)
             }
-
+            // writing to channels is a blocking operation and it waits until someone reads from said channel
+            // many writes to a channel creates a waiting queue but does not guarantee order, as expected
             ch <- r
         }(int(i*maxIter/nThreads), int((i+1)*maxIter/nThreads), ch)
     }
 
     //joining threads
     for i := 0; i < nThreads; i++ {
+        // reading from channel is a blocking operation and it waits for a write
+        // the number of reads MUST be the same nr of writes, since i'm not using a buffered channel or wait groups
         result += <-ch
     }
 
     close(ch) // needs closing?
     return result
-}
-
-
-// auxiliary function to piThread
-// given start, end, partially computes pi using the Leibniz series
-// result output into the result channel
-func piThread_aux(start int, end int,result chan float64){
-
 }
 
 // given the number of max_iterations
@@ -79,22 +74,6 @@ func pi(maxIter int) float64 {
     for i = 0; i < maxIter; i++ {
         result += 4.0 * math.Pow(-1, float64(i)) * 1/(float64(i)*2+1)//geez, to type coersion then? not ever some kind of numeric supertype?
     }
-
-    return result
-}
-
-// computes pi partially (Leibniz' Formula)
-// starts at start and goes to maxIter
-// if start == 0, it computes pi correctly
-func piPart(start int, maxIter int) float64 {
-    var result float64 = 0
-
-    return result
-}
-
-
-func piThreaded(maxIter int, nThreads int) float64 {
-    var result float64 = 0
 
     return result
 }
