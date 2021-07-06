@@ -1,0 +1,1 @@
+{"rustc":10026429466883849012,"features":"[]","target":10706426588214668663,"profile":2285152228202085614,"path":1036222786711178230,"deps":[[4928183015175390168,"rand",false,18143386028846683565]],"local":[{"CheckDepInfo":{"dep_info":"release/.fingerprint/matrix-f00a690f8025d98e/dep-bin-matrix"}}],"rustflags":[],"metadata":7797948686568424061,"config":0,"compile_kind":0}

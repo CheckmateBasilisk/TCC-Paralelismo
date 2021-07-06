@@ -1,0 +1,11 @@
+/home/bagatini/Documents/Escola/TCC/TCC-Paralelismo/Rust/matrix/target/debug/deps/getrandom-5ce25ebba6bdbb98.rmeta: /home/bagatini/.cargo/registry/src/github.com-1ecc6299db9ec823/getrandom-0.2.3/src/lib.rs /home/bagatini/.cargo/registry/src/github.com-1ecc6299db9ec823/getrandom-0.2.3/src/error.rs /home/bagatini/.cargo/registry/src/github.com-1ecc6299db9ec823/getrandom-0.2.3/src/util.rs /home/bagatini/.cargo/registry/src/github.com-1ecc6299db9ec823/getrandom-0.2.3/src/error_impls.rs /home/bagatini/.cargo/registry/src/github.com-1ecc6299db9ec823/getrandom-0.2.3/src/util_libc.rs /home/bagatini/.cargo/registry/src/github.com-1ecc6299db9ec823/getrandom-0.2.3/src/use_file.rs /home/bagatini/.cargo/registry/src/github.com-1ecc6299db9ec823/getrandom-0.2.3/src/linux_android.rs
+
+/home/bagatini/Documents/Escola/TCC/TCC-Paralelismo/Rust/matrix/target/debug/deps/getrandom-5ce25ebba6bdbb98.d: /home/bagatini/.cargo/registry/src/github.com-1ecc6299db9ec823/getrandom-0.2.3/src/lib.rs /home/bagatini/.cargo/registry/src/github.com-1ecc6299db9ec823/getrandom-0.2.3/src/error.rs /home/bagatini/.cargo/registry/src/github.com-1ecc6299db9ec823/getrandom-0.2.3/src/util.rs /home/bagatini/.cargo/registry/src/github.com-1ecc6299db9ec823/getrandom-0.2.3/src/error_impls.rs /home/bagatini/.cargo/registry/src/github.com-1ecc6299db9ec823/getrandom-0.2.3/src/util_libc.rs /home/bagatini/.cargo/registry/src/github.com-1ecc6299db9ec823/getrandom-0.2.3/src/use_file.rs /home/bagatini/.cargo/registry/src/github.com-1ecc6299db9ec823/getrandom-0.2.3/src/linux_android.rs
+
+/home/bagatini/.cargo/registry/src/github.com-1ecc6299db9ec823/getrandom-0.2.3/src/lib.rs:
+/home/bagatini/.cargo/registry/src/github.com-1ecc6299db9ec823/getrandom-0.2.3/src/error.rs:
+/home/bagatini/.cargo/registry/src/github.com-1ecc6299db9ec823/getrandom-0.2.3/src/util.rs:
+/home/bagatini/.cargo/registry/src/github.com-1ecc6299db9ec823/getrandom-0.2.3/src/error_impls.rs:
+/home/bagatini/.cargo/registry/src/github.com-1ecc6299db9ec823/getrandom-0.2.3/src/util_libc.rs:
+/home/bagatini/.cargo/registry/src/github.com-1ecc6299db9ec823/getrandom-0.2.3/src/use_file.rs:
+/home/bagatini/.cargo/registry/src/github.com-1ecc6299db9ec823/getrandom-0.2.3/src/linux_android.rs:

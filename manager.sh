@@ -6,17 +6,27 @@ OUTPUT_DIR=./output
 # path to dir with executables/scripts
 # like [application].py
 PYTHON_DIR=./Python
-RUST_DIR=./Rust
-HASKELL_DIR=./Haskell
+#   python pi runs with n=10_000_000
+#   python matrix runs with n=300
 GO_DIR=./Go
+#   go pi runs with n=10_000_000
+#   go matrix runs with n=300
+RUST_DIR=./Rust
+#   rust pi runs with n=10_000_000
+#   rust matrix runs with n=300
 KOTLIN_DIR=./Kotlin
+#   kotlin pi runs with n=10_000_000
+#   kotlin matrix runs with n=300
+HASKELL_DIR=./Haskell
+#   haskell pi runs with n=10_000_000
+#   haskell matrix runs with n=300
 
-METHOD=(single thread)
-APPLICATION=(pi matrix)
+#APPLICATION=(pi matrix)
+APPLICATION=(pi)
 LANGUAGE=(python rust haskell go kotlin)
 THREADS=(0 1 2 3 4) # 0 threads means a non-paralelized application
 
-N_RUNS=5
+N_RUNS=3
 
 if [ $# -gt 0 ] # clears output files
 then
@@ -51,14 +61,23 @@ else
             for A in ${APPLICATION[@]}
             do
                 echo "Run $RUN/$N_RUNS - $A, $T threads"
-                #echo "${L}_${A}-${T}threads.out"
+
+                # python3 ./Python/pi/pi.py nthreads process/thread
                 python3 $PYTHON_DIR/${A}.py ${T} process >> ${OUTPUT_DIR}/python_threadpool_${A}_${T}threads.out
                 python3 $PYTHON_DIR/${A}.py ${T} thread >> ${OUTPUT_DIR}/python_processpool_${A}_${T}threads.out
                 echo -e "\tPython DONE"
+
                 # ./Go/pi/pi.exe nthreads
                 $GO_DIR/${A}/${A} ${T}  >> ${OUTPUT_DIR}/go_${A}_${T}threads.out
+
                 echo -e "\tGo DONE"
-                #echo "$RUST_DIR/${A}.rs ${T} >> ${OUTPUT_DIR}/rust_${A}_${T}threads.out"
+                # cargo run --manifest-path ./Rust/pi/Cargo.toml --release 0
+                #   manifest path is the path to the Cargo.toml which contains the dependency list etc.
+                #   --release orders it to build run an optimized version
+                #   -q do it quietly
+                cargo run --manifest-path $RUST_DIR/${A}/Cargo.toml --release -q ${T} >> ${OUTPUT_DIR}/rust_${A}_${T}threads.out
+                echo -e "\tRust DONE"
+
                 #echo "$HASKELL_DIR/${A}.hs ${T} >> ${OUTPUT_DIR}/haskell_${A}_${T}threads.out"
                 #echo "$KOTLIN_DIR/${A}.ktl ${T} >> ${OUTPUT_DIR}/kotlin_${A}_${T}threads.out"
 
