@@ -23,7 +23,7 @@ HASKELL_DIR=./Haskell
 
 #APPLICATION=(pi matrix)
 APPLICATION=(pi)
-LANGUAGE=(python rust haskell go kotlin)
+LANGUAGE=(python go rust kotlin haskell)
 THREADS=(0 1 2 3 4) # 0 threads means a non-paralelized application
 
 N_RUNS=3
@@ -67,6 +67,7 @@ else
                 python3 $PYTHON_DIR/${A}.py ${T} thread >> ${OUTPUT_DIR}/python_processpool_${A}_${T}threads.out
                 echo -e "\tPython DONE"
 
+                # TODO: talvez eu deva fazer go run ./Go/pi/pi.go pra garantir que a coisa compila. Eu chequei e não tem flags de otimização adicional tbm
                 # ./Go/pi/pi.exe nthreads
                 $GO_DIR/${A}/${A} ${T}  >> ${OUTPUT_DIR}/go_${A}_${T}threads.out
 
@@ -78,8 +79,8 @@ else
                 cargo run --manifest-path $RUST_DIR/${A}/Cargo.toml --release -q ${T} >> ${OUTPUT_DIR}/rust_${A}_${T}threads.out
                 echo -e "\tRust DONE"
 
-                #echo "$HASKELL_DIR/${A}.hs ${T} >> ${OUTPUT_DIR}/haskell_${A}_${T}threads.out"
                 #echo "$KOTLIN_DIR/${A}.ktl ${T} >> ${OUTPUT_DIR}/kotlin_${A}_${T}threads.out"
+                #echo "$HASKELL_DIR/${A}.hs ${T} >> ${OUTPUT_DIR}/haskell_${A}_${T}threads.out"
 
 
             done
