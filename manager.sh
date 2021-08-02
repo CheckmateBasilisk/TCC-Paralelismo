@@ -67,11 +67,11 @@ else
                 python3 $PYTHON_DIR/${A}.py ${T} thread >> ${OUTPUT_DIR}/python_processpool_${A}_${T}threads.out
                 echo -e "\tPython DONE"
 
-                # TODO: talvez eu deva fazer go run ./Go/pi/pi.go pra garantir que a coisa compila. Eu chequei e não tem flags de otimização adicional tbm
                 # ./Go/pi/pi.exe nthreads
+                # TODO: talvez eu deva fazer go run ./Go/pi/pi.go pra garantir que a coisa compila. Eu chequei e não tem flags de otimização adicional tbm
                 $GO_DIR/${A}/${A} ${T}  >> ${OUTPUT_DIR}/go_${A}_${T}threads.out
-
                 echo -e "\tGo DONE"
+
                 # cargo run --manifest-path ./Rust/pi/Cargo.toml --release 0
                 #   manifest path is the path to the Cargo.toml which contains the dependency list etc.
                 #   --release orders it to build run an optimized version
@@ -79,7 +79,9 @@ else
                 cargo run --manifest-path $RUST_DIR/${A}/Cargo.toml --release -q ${T} >> ${OUTPUT_DIR}/rust_${A}_${T}threads.out
                 echo -e "\tRust DONE"
 
-                #echo "$KOTLIN_DIR/${A}.ktl ${T} >> ${OUTPUT_DIR}/kotlin_${A}_${T}threads.out"
+                # java -jar ./Kotlin/pi.jar
+                echo "java -jar $KOTLIN_DIR/${A}.ktl ${T} >> ${OUTPUT_DIR}/kotlin_${A}_${T}threads.out"
+
                 #echo "$HASKELL_DIR/${A}.hs ${T} >> ${OUTPUT_DIR}/haskell_${A}_${T}threads.out"
 
 
@@ -88,3 +90,15 @@ else
     done
 
 fi
+
+# build commands
+# kotlinc $KOTLIN_DIR/matrix.kt -d $KOTLIN_DIR/matrix.jar -include-runtime
+# kotlinc $KOTLIN_DIR/pi.kt -d $KOTLIN_DIR/pi.jar -include-runtime
+
+
+# compilation commands
+# python : not needed. Python is interpreted. Just run using python3 script.py
+# rust : cargo build --release (inside proj directory or using --manifest-path ./path_to_toml_file)
+# go : go build source.go
+# Kotlin: kotlinc source.kt -include-runtime -d out.jar  (builda a .jar file from the outputs, include runtime akin to static compilation but it is an application, not a module)
+# haskell : ??
