@@ -80,7 +80,22 @@ else
                 echo -e "\tRust DONE"
 
                 # java -jar ./Kotlin/pi.jar
-                echo "java -jar $KOTLIN_DIR/${A}.ktl ${T} >> ${OUTPUT_DIR}/kotlin_${A}_${T}threads.out"
+                # echo "java -jar $KOTLIN_DIR/${A}.ktl ${T} >> ${OUTPUT_DIR}/kotlin_${A}_${T}threads.out"
+                # since kotlin is such a corporate bitch, gradle is necessary. Otherwise IntelliJ is needed and I'm not installing a colossal IDE just for this...
+
+                # gradle run -p ./Kotlin/pi --args="arg1 arg2" -q
+                #   gradle is the project management tool needed to use external packages with kotlin
+                #   run builds and runs the project
+                #   -p defines is the project directory, if omitted . is the default
+                #   --args="" is needed to pass arguments to the program
+                #   -q is to execute quietly, supressing gradle output and just showing the app output
+                #echo -e "gradle run -p $KOTLIN_DIR/${A} --args=\"${T}\" -q"
+                gradle run -p $KOTLIN_DIR/${A} --args="${T}" -q >> ${OUTPUT_DIR}/kotlin_${A}_${T}threads.out
+                # tive que fazer umas bizarrices pra funcionar.
+                #   adicionando dependências: no arquivo ./app/build.gradle.kts , adicionar na seção dependencies{} implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1")
+                #   me livrar dos arquivos para testes (que pararam de funcionar com a adição da dependência, nem ideia de pq): arquivo ./app/src/test/kotlin/pi/AppTest.kt, basicamente tdo o código
+                echo -e "\tKotlin DONE"
+
 
                 #echo "$HASKELL_DIR/${A}.hs ${T} >> ${OUTPUT_DIR}/haskell_${A}_${T}threads.out"
 
@@ -88,7 +103,6 @@ else
             done
         done
     done
-
 fi
 
 # build commands
@@ -101,4 +115,5 @@ fi
 # rust : cargo build --release (inside proj directory or using --manifest-path ./path_to_toml_file)
 # go : go build source.go
 # Kotlin: kotlinc source.kt -include-runtime -d out.jar  (builda a .jar file from the outputs, include runtime akin to static compilation but it is an application, not a module)
+# Kotlin: gradle build -p ./project_dir
 # haskell : ??
