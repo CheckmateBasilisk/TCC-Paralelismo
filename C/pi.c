@@ -15,7 +15,7 @@ double pi(int maxIter){
 
 
 int main(){
-    int maxIter = 10000000;
+    int maxIter = 1000000000;//1b iterations
     clock_t start, end;
     double cpu_time_used;
 

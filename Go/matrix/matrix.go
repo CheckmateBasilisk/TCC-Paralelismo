@@ -7,6 +7,8 @@ import(
     "time" //for counting elapsed time
     "os" //for acess to params
     "strconv" //for converting str to int
+
+    "sync" //for waitgroups
 )
 
 func main() {
@@ -43,11 +45,16 @@ func main() {
 }
 
 func matrixThread(n int, m1 [][]int ,m2 [][]int, result [][]int, nThreads int) {
+    var wg sync.WaitGroup
+
     //spawning threads
     for i := 0; i < nThreads; i++ {
+        // adds to the wait group
+        wg.Add(1)
         // computes m1 x m2 partially in goroutines
         // outputs the result in shared memory matrix result
-        go func(start int, end int){
+        // must pass the waitGroup to it so it warns the outside scope when it finishes
+        go func(start int, end int, wg *sync.WaitGroup){
             for i := 0; i < end; i++ {
                 for j := range result[i] {
                     for k := range result[i]{
@@ -55,9 +62,11 @@ func matrixThread(n int, m1 [][]int ,m2 [][]int, result [][]int, nThreads int) {
                     }
                 }
             }
-        }(int(i*n/nThreads), int((i+1)*n/nThreads))
+            wg.Done() // warns the outside scope the thread finished, decreases 1 in the internal wg counter, similar to a semaphore.
+        }(int(i*n/nThreads), int((i+1)*n/nThreads), &wg)
     }
 
+	wg.Wait() // wait until all threads finished
     //return
 }
 

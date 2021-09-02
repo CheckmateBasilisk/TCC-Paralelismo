@@ -10,7 +10,7 @@ def main():
 
     nthreads = int(sys.argv[1]) # paramaeter passed to script
     maxworkers = nthreads
-    n = 200 #matrix size
+    n = 1000 #matrix size
 
     m1 = get_random_int_matrix(n = n, min_val = -10, max_val = 10,)
     m2 = get_random_int_matrix(n = n, min_val = -10, max_val = 10,)

@@ -5,7 +5,7 @@ use std::thread;//spawning threads
 //use std::sync::mpsc;//using channels
 
 fn main() {
-    let max_iter = 100_000_000;
+    let max_iter = 1_000_000_000; // 1b iterations
 
     let args: Vec<String> = env::args().collect();//geting args from cmd line
     let n_threads:usize = args[1].parse::<i32>().unwrap() as usize;//converting arg['nthreads'] to uint

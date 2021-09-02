@@ -11,7 +11,7 @@ def main():
 
     nthreads = int(sys.argv[1]) # paramaeter passed to script
     maxworkers = nthreads
-    n_iterations = 10_000_000
+    n_iterations = 1_000_000_000 # 1b iterations
 
     elapsed_time = time.time() # get current time
     if(nthreads == 0):

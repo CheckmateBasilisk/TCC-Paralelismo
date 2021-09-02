@@ -11,7 +11,7 @@ import(
 //TODO: pesquisar sobre select
 
 func main() {
-    const maxIter = 10_000_000 //10m iterations
+    const maxIter = 1_000_000_000 //1b iterations
     var nThreads, _ = strconv.Atoi(os.Args[1])
 
     start := time.Now()

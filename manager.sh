@@ -22,11 +22,13 @@ HASKELL_DIR=./Haskell
 #   haskell matrix runs with n=300
 
 #APPLICATION=(pi matrix)
-APPLICATION=(pi)
-LANGUAGE=(python go rust kotlin haskell)
-THREADS=(0 1 2 3 4) # 0 threads means a non-paralelized application
+#APPLICATION=(pi)
+APPLICATION=(matrix)
+LANGUAGE=(python go rust kotlin)
+THREADS=(0 1 2 3 6 10 100) # 0 threads means a non-paralelized application
+#THREADS=(100) # 0 threads means a non-paralelized application
 
-N_RUNS=3
+N_RUNS=30
 
 if [ $# -gt 0 ] # clears output files
 then
@@ -42,7 +44,7 @@ then
                 touch "${OUTPUT_DIR}/python_processpool_${A}_${T}threads.out"
                 touch "${OUTPUT_DIR}/go_${A}_${T}threads.out"
                 touch "${OUTPUT_DIR}/rust_${A}_${T}threads.out"
-                touch "${OUTPUT_DIR}/haskell_${A}_${T}threads.out"
+                #touch "${OUTPUT_DIR}/haskell_${A}_${T}threads.out"
                 touch "${OUTPUT_DIR}/kotlin_${A}_${T}threads.out"
             done
         done
@@ -63,33 +65,33 @@ else
                 echo "Run $RUN/$N_RUNS - $A, $T threads"
 
                 # python3 ./Python/pi/pi.py nthreads process/thread
-                python3 $PYTHON_DIR/${A}.py ${T} process >> ${OUTPUT_DIR}/python_threadpool_${A}_${T}threads.out
-                python3 $PYTHON_DIR/${A}.py ${T} thread >> ${OUTPUT_DIR}/python_processpool_${A}_${T}threads.out
-                echo -e "\tPython DONE"
+                #python3 $PYTHON_DIR/${A}.py ${T} process >> ${OUTPUT_DIR}/python_threadpool_${A}_${T}threads.out
+                #python3 $PYTHON_DIR/${A}.py ${T} thread >> ${OUTPUT_DIR}/python_processpool_${A}_${T}threads.out
+                #echo -e "\tPython DONE"
 
                 # ./Go/pi/pi.exe nthreads
                 # TODO: talvez eu deva fazer go run ./Go/pi/pi.go pra garantir que a coisa compila. Eu chequei e não tem flags de otimização adicional tbm
-                $GO_DIR/${A}/${A} ${T}  >> ${OUTPUT_DIR}/go_${A}_${T}threads.out
-                echo -e "\tGo DONE"
+                #go run $GO_DIR/${A}/${A}.go ${T}  >> ${OUTPUT_DIR}/go_${A}_${T}threads.out
+                #echo -e "\tGo DONE"
 
                 # cargo run --manifest-path ./Rust/pi/Cargo.toml --release 0
                 #   manifest path is the path to the Cargo.toml which contains the dependency list etc.
                 #   --release orders it to build run an optimized version
                 #   -q do it quietly
-                cargo run --manifest-path $RUST_DIR/${A}/Cargo.toml --release -q ${T} >> ${OUTPUT_DIR}/rust_${A}_${T}threads.out
-                echo -e "\tRust DONE"
+#                cargo run --manifest-path $RUST_DIR/${A}/Cargo.toml --release -q ${T} >> ${OUTPUT_DIR}/rust_${A}_${T}threads.out
+#                echo -e "\tRust DONE"
 
                 # java -jar ./Kotlin/pi.jar
                 # echo "java -jar $KOTLIN_DIR/${A}.ktl ${T} >> ${OUTPUT_DIR}/kotlin_${A}_${T}threads.out"
                 # since kotlin is such a corporate bitch, gradle is necessary. Otherwise IntelliJ is needed and I'm not installing a colossal IDE just for this...
 
-                # gradle run -p ./Kotlin/pi --args="arg1 arg2" -q
+                # gradle run -p ./Kotlin/pi --args="nthreads" -q
                 #   gradle is the project management tool needed to use external packages with kotlin
                 #   run builds and runs the project
                 #   -p defines is the project directory, if omitted . is the default
                 #   --args="" is needed to pass arguments to the program
                 #   -q is to execute quietly, supressing gradle output and just showing the app output
-                #echo -e "gradle run -p $KOTLIN_DIR/${A} --args=\"${T}\" -q"
+
                 gradle run -p $KOTLIN_DIR/${A} --args="${T}" -q >> ${OUTPUT_DIR}/kotlin_${A}_${T}threads.out
                 # tive que fazer umas bizarrices pra funcionar.
                 #   adicionando dependências: no arquivo ./app/build.gradle.kts , adicionar na seção dependencies{} implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1")

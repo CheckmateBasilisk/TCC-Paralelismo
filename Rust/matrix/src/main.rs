@@ -4,7 +4,7 @@ use crossbeam_utils::thread;//for scoped threads that borrow variables in the st
 use rand::Rng;
 
 fn main() {
-    let n = 4*300;//mds do céu Rust corre mto...
+    let n = 1000;//mds do céu Rust corre mto...
     let args: Vec<String> = env::args().collect();//geting args from cmd line
     let n_threads:usize = args[1].parse::<i32>().unwrap() as usize;//converting arg['nthreads'] to uint
 

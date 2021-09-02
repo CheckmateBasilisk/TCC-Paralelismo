@@ -8,14 +8,14 @@ import kotlin.system.measureTimeMillis
 import kotlinx.coroutines.*
 
 fun main(args: Array<String>) {
-    val nIter : Int = 100_000_000 // 10m iterations
+    val nIter : Int = 1_000_000_000 // 1b iterations
     val nThreads : Int = args[0].toInt() // arg[0] isnt the program name, it is the actual first argument
 
     val elapsed = measureTimeMillis {
         if (nThreads == 0) {
-                println(pi(nIter))
+                pi(nIter)
             } else {
-                println(pi_thread_coroutine(nIter, nThreads))
+                pi_thread_coroutine(nIter, nThreads)
             }
     }
 

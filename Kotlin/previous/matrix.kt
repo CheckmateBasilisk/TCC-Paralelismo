@@ -1,19 +1,24 @@
 //from tutorialspoint on mutable vs immutable collections:
 // (...) Kotlin system does not represent any specific difference in them.
-// changing immutable variables seems to get caught in compile time
+// changing immutable variables seems to get caught in compile time ?
 
+// kotlinc hello.kt -include-runtime -d hello.jar
+// java -jar hello.jar
 
 import kotlin.random.Random
 import kotlin.system.measureTimeMillis
 
 fun main(args: Array<String>) {
-    val n : Int = 3000 // nxn matrices
+    val n : Int = 3 // nxn matrices
     val nThreads: Int = args[0].toInt() // arg[0] isnt the program name, it is the actual first argument
     val min = -10
     val max = 10
     val m1 : Array<IntArray> = getRandomMatrix(n, min, max+1) //randomMatrix generates in [min, max[
     val m2 : Array<IntArray> = getRandomMatrix(n, min, max+1)
     var result : Array<IntArray> = Array(n) { IntArray(n) { 0 } }//matrix filled with 0s
+
+    printMatrix(m1)
+    printMatrix(m2)
 
     val elapsed = measureTimeMillis {
         if (nThreads == 0) {
@@ -22,6 +27,8 @@ fun main(args: Array<String>) {
                 matrix_thread(m1, m2, result, nThreads)
             }
     }
+
+    printMatrix(result)
     println("${elapsed.toDouble()/1000}") //elapsed time must be in seconds
 }
 
